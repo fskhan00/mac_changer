@@ -2,6 +2,7 @@
 
 import optparse
 import subprocess
+import re
 
 def get_arguments():
     parser = optparse.OptionParser()
@@ -24,6 +25,13 @@ def change_mac(interface,mac):
 option = get_arguments()
 ifconfig_result = subprocess.check_output(["ifconfig", option.interface])
 print(ifconfig_result)
+
+mac_adress_finder = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w",str(ifconfig_result))
+
+if mac_adress_finder:
+    print(mac_adress_finder.group(0))
+else:
+    print("[-] No such interface exist.")    
 
 
 
